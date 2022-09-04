@@ -53,29 +53,31 @@ function Demo() {
     }
 
     const updateUserTokens = async () => {
-            let userTokens = await state.Token.contract.methods.balanceOf(state.accounts[0]).call();
+
+            let userTokens = await state.Token.contract.methods.balanceOf(state.Token.accounts[0]).call();
             setStateUserTokens(userTokens)
 
     }
 
 
     const handleBuyTokens = async () => {
-        await state.TokenSale.methods.buyTokens(state.accounts[0]).send({
-            from: state.accounts[0],
-            value: state.web3.utils.toWei("1", "wei")
+        await state.TokenSale.contract.methods.buyTokens(state.Token.accounts[0]).send({
+            from: state.Token.accounts[0],
+            value: state.Token.web3.utils.toWei("1", "wei"),
+            gas: 326003
         });
     }
 
 
     /*useEffect(() => {
-        const listenToTokenTransfer =  () => {
-            if (state.Token.contract !== undefined) {
+        const listenToTokenTransfer =  async () => {
+            if (isTokenSaleSetup) {
                 console.log(state.Token, " this state tokent")
-                 state.Token.contract.events.Transfer({to: state.accounts[0]}).on("data", updateUserTokens);
+               await  state.Token.contract.events.Transfer({to: state.accounts[0]}).on("data", updateUserTokens);
             }
         }
         listenToTokenTransfer()
-    }, [state.Token.contract]);*/
+    });*/
 
 
     return (
@@ -93,6 +95,7 @@ function Demo() {
 
             <p>You currently have: {stateUserTokens} CAPPU Tokens</p>
             <button type="button" onClick={handleBuyTokens}>Buy more tokens</button>
+            <button type="button" onClick={updateUserTokens}>Update users tokens</button>
 
         </div>
     );

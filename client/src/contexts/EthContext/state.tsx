@@ -13,17 +13,17 @@ let MyTokenState!: ContractState | null;
 let MyTokenSaleState!: ContractState | null;
 let KycState!: ContractState | null;
 
-export type State = {
+/*export type State = {
     MyTokenState: ContractState | null;
     MyTokenSaleState: ContractState | null;
     KycState: ContractState | null;
-}
-let initialState: State = {
+}*/
+/*let initialState: State = {
     MyTokenState: {artifact: {}, web3: {}, accounts: [], networkID: 0, contract: {}},
     MyTokenSaleState: {artifact: {}, web3: {}, accounts: [], networkID: 0, contract: {}},
     KycState: {artifact: {}, web3: {}, accounts: [], networkID: 0, contract: {}}
 };
-
+console.log(initialState , " this is ethcontext")*/
 
 const reducer = (state: ContractState, action: { type: string; data: {}; }) => {
     let {type, data} = action;
@@ -40,7 +40,6 @@ const reducer = (state: ContractState, action: { type: string; data: {}; }) => {
 };
 
 export {
-    initialState,
     MyTokenState,
     MyTokenSaleState,
     KycState,
