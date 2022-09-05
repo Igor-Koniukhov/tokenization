@@ -1,16 +1,38 @@
 import React, {useCallback, useEffect, useReducer} from "react";
 import Web3 from "web3";
 import EthContext from "./EthContext";
-import {KycState, MyTokenSaleState, MyTokenState, reducer} from "./state";
+import {reducer} from "./state";
 import MyToken from "../../contracts/MyToken.json";
 import MyTokenSale from "../../contracts/MyTokenSale.json";
 import KycContract from "../../contracts/KycContract.json";
 
+let InitialStateMyToken = {
+    artifact: MyToken,
+    web3: new Web3(),
+    accounts: [],
+    networkID: 5777,
+    contract: {},
+} ;
+
+let InitialStateMyTokenSale = {
+    artifact: MyTokenSale,
+    web3: new Web3(),
+    accounts: [],
+    networkID: 5777,
+    contract: {},
+}
+let InitialStateKycContract = {
+    artifact: KycContract,
+    web3: new Web3(),
+    accounts: [],
+    networkID: 5777,
+    contract: {},
+}
 
 function EthProvider({children}) {
-    const [Token, dispTokenState] = useReducer(reducer, MyTokenState);
-    const [TokenSale, dispTokenStateSale] = useReducer(reducer, MyTokenSaleState);
-    const [KYC, dispKycState] = useReducer(reducer, KycState);
+    const [Token, dispTokenState] = useReducer(reducer, InitialStateMyToken);
+    const [TokenSale, dispTokenStateSale] = useReducer(reducer, InitialStateMyTokenSale);
+    const [KYC, dispKycState] = useReducer(reducer, InitialStateKycContract);
 
     const init = useCallback(
         async (artifact) => {
@@ -76,7 +98,7 @@ function EthProvider({children}) {
         tryInit();
     }, [initAllContracts]);
 
-    useEffect(() => {
+    /*useEffect(() => {
         const events = ["chainChanged", "accountsChanged"];
         const handleChange = () => {
             initAllContracts(Token, TokenSale, KYC);
@@ -86,7 +108,7 @@ function EthProvider({children}) {
         return () => {
             events.forEach(e => window.ethereum.removeListener(e, handleChange));
         };
-    }, [Token, TokenSale, KYC, initAllContracts]);
+    }, [Token, TokenSale, KYC, initAllContracts]);*/
 
     return (
         <EthContext.Provider value={{
