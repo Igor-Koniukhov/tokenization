@@ -69,15 +69,14 @@ function Demo() {
     }
 
 
-    /*useEffect(() => {
+    useEffect(() => {
         const listenToTokenTransfer =  async () => {
-            if (isTokenSaleSetup) {
-                console.log(state.Token, " this state tokent")
-               await  state.Token.contract.events.Transfer({to: state.accounts[0]}).on("data", updateUserTokens);
+            if (isTokenSaleSetup && state.Token.contract.events !== undefined) {
+               await  state.Token.contract.events.Transfer({to: state.Token.accounts[0]}).on("data", updateUserTokens);
             }
         }
         listenToTokenTransfer()
-    });*/
+    });
 
 
     return (
